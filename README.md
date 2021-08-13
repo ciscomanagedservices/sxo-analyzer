@@ -11,10 +11,7 @@ By using this GitHub Action, you can have the Workflow Analyzer automatically ru
 <br>Don't want the analyzer to run for some workflows? No problem. Just add `!#NOANALYZER` to your workflow description before you commit to the repository and we'll skip it.
 
 2. **Ability to automatically create issues for items that do not conform to best practices**
-<br>We'll create an issue per run with an itemized list of checks that failed. 
-> 💡 Pro Tip: Want to run the analyzer but don't want us to create an issue? Add `!#NOISSUE` to your workflow description before you commit to the repository and we won't. You can still view the analyzer's results from under the **<img src="https://icon-library.com/images/video-play-icon-png/video-play-icon-png-2.jpg" width="15" height="15"></img> Actions** tab on your repository.
-
-
+<br>We'll create an issue per run with an itemized list of checks that failed. A sample issue can be found [here](https://github.com/ciscomanagedservices/sxo-analyzer/issues/1).
 
 3. **Latest code, always**
 <br>We pull the latest analyzer code on every run. As new best practices & checks are added to the workflow analyzer over time, this action will always be up-to-date!
