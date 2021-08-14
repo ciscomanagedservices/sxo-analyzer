@@ -1,0 +1,99 @@
+name: analyzer
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Temp input for workflow to run adhoc'
+        required: false
+        default: 'Ignore this field'
+
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.py'
+      - '**.js'
+      - '.github/**'
+
+jobs:
+  analyzer:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Repo Content
+        uses: actions/checkout@v2 # checkout the repository content to github runner
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          
+      - name: Install Node Modules
+        run: npm install node-fetch
+
+      - name: Get analyzer-run
+        id: analyzer-run
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://raw.githubusercontent.com/nxmbiar/analyzer-scripts/main/analyzer_run.js"
+          method: 'GET'
+
+      - name: Write analyzer-run
+        run: printf $${{ steps.analyzer-run.outputs.response }} > .github/analyzer_run.js
+          
+      - name: Execute Node Script
+        run: node .github/analyzer_run.js $GITHUB_WORKSPACE
+        id: analyzer-script
+
+      - name: Get analyzer-render-template
+        id: analyzer-render-template
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://raw.githubusercontent.com/nxmbiar/analyzer-scripts/main/analyzer_render_template.py"
+          method: 'GET'
+
+      - name: Write analyzer-render-template
+        run: printf $${{ steps.analyzer-render-template.outputs.response }} >> .github/analyzer_render_template.py
+      
+      - name: Get analyzer-issue-template
+        id: analyzer-issue-template
+        uses: fjogeleit/http-request-action@master
+        with:
+          url: "https://raw.githubusercontent.com/nxmbiar/analyzer-scripts/main/ANALYZER_ISSUE_TEMPLATE.md"
+          method: 'GET'
+
+      - name: Write analyzer-issue-template
+        run: |
+          line=$(echo $${{ steps.analyzer-issue-template.outputs.response }} | sed -r 's/%/%%/g')
+          printf -- "$line" >> .github/templates/ANALYZER_ISSUE_TEMPLATE.md
+      
+      - name: Fetch Changed Files
+        id: files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: 'json'
+    
+      - name: Write Changed Files
+        run: printf '%s,' '${{ steps.files.outputs.added_modified }}' > .github/wf.json
+      
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7.7'
+          
+      - name: Install Python Packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install jinja2
+          
+      - name: Execute Python Packages
+        run: python .github/analyzer_render_template.py $GITHUB_WORKSPACE $GITHUB_SHA
+      
+      - name: Create Issue
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JSON: ${{ steps.analyzer-script.outputs.OUTPUT_JSON }}"
+        with:
+          filename: .github/ISSUE.md
+          assignees: nxmbiar # edit this field to change the assignees to the issue, you can remove this if the issue need not be assigned when created
