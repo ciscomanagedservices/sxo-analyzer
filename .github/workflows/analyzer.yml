@@ -92,8 +92,9 @@ jobs:
       - name: Execute Python Script
         id: run-python-script
         run: python .github/analyzer_render_template.py $GITHUB_WORKSPACE $GITHUB_SHA
-      
+    
       - name: Create Issue
+        if: ${{ steps.run-python-script.outputs.no_issue == 'False' }}
         uses: JasonEtco/create-an-issue@v2
         id: create-issue
         env:
@@ -108,4 +109,4 @@ jobs:
         with:
           issue-number: ${{ steps.create-issue.outputs.number }}
           comment: Auto-closing issue because no failures or warnings detected
-        if: ${{ steps.run-python-script.outputs.no_issues }} == True
+        if: ${{ steps.run-python-script.outputs.no_issue == 'False' && steps.run-python-script.outputs.close_issues }}
