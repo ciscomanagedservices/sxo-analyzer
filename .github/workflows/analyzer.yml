@@ -99,4 +99,4 @@ jobs:
           JSON: ${{ steps.analyzer-script.outputs.OUTPUT_JSON }}"
         with:
           filename: .github/ISSUE.md
-          assignees: nxmbiar # edit this field to change the assignees to the issue, you can remove this if the issue need not be assigned when created
+          # assignees:  # edit this field to change the assignees to the issue, you can remove this if the issue need not be assigned when created
