@@ -108,3 +108,4 @@ jobs:
         with:
           issue-number: ${{ steps.create-issue.outputs.number }}
           comment: Auto-closing issue because no failures or warnings detected
+        if: ${{ steps.run-python-script.outputs.no_issue == 'False' && steps.run-python-script.outputs.close_issues }}
