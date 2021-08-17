@@ -9,11 +9,12 @@ on:
         default: 'Ignore this field'
 
   push:
-    paths-ignore:
-      - '**.md'
-      - '**.py'
-      - '**.js'
-      - '.github/**'
+    paths:
+      - '**/definition_workflow*.json'
+      # - '!**.md'
+      # - '!**.py'
+      # - '!**.js'
+      # - '!.github/**'
 
 jobs:
   analyzer:
@@ -89,12 +90,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install jinja2
           
-      - name: Execute Python Script
-        id: run-python-script
+      - name: Execute Python Packages
         run: python .github/analyzer_render_template.py $GITHUB_WORKSPACE $GITHUB_SHA
-    
+      
       - name: Create Issue
-        if: ${{ steps.run-python-script.outputs.no_issue == 'False' }}
         uses: JasonEtco/create-an-issue@v2
         id: create-issue
         env:
@@ -109,4 +108,3 @@ jobs:
         with:
           issue-number: ${{ steps.create-issue.outputs.number }}
           comment: Auto-closing issue because no failures or warnings detected
-        if: ${{ steps.run-python-script.outputs.no_issue == 'False' && steps.run-python-script.outputs.close_issues }}
