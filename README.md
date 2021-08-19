@@ -1,5 +1,7 @@
 ## GitHub Action for SecureX Orchestrator Workflow Analyzer
 
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/ciscomanagedservices/sxo-analyzer)
+
 This repository houses a [GitHub Action](https://github.com/features/actions) wrapper for the Workflow Analyzer available [here](https://ciscosecurity.github.io/sxo-05-security-workflows/analyzer/), that you can use in a CI/CD pipeline with your SecureX Orchestrator (SXO) Atomic Actions & Workflows. 
 
 By using this GitHub Action, you can have the Workflow Analyzer automatically run on each commit you make to the repository to check if your workflows & atomic actions conform to Cisco recommended best practices.
@@ -10,10 +12,13 @@ By using this GitHub Action, you can have the Workflow Analyzer automatically ru
 1. **Ability to run conditionally**
 <br>Don't want the analyzer to run for some workflows? No problem. Just add `!#NOANALYZER` to your workflow description before you commit to the repository and we'll skip it.
 
-2. **Ability to automatically create issues for items that do not conform to best practices**
-<br>We'll create an issue per run with an itemized list of checks that failed. A sample issue can be found [here](https://github.com/ciscomanagedservices/sxo-analyzer/issues/1).
+2. **Commit Context Aware**
+<br>The analyzer will only run for workflows/atomic actions in a given commit and not everything in the repository. This ensures we don't create repeat issues.
 
-3. **Latest code, always**
+3. **Ability to automatically create issues for items that do not conform to best practices**
+<br>We'll create an issue per run with an itemized list of checks that failed. A sample issue can be found [here](https://github.com/ciscomanagedservices/sxo-analyzer/issues/1). If no issues are found, i.e. all checks pass in all workflows in the commit context, an issue will be created and auto-closed. This way, you can still audit checks that passed and don't warrant any action.
+
+4. **Latest code, always**
 <br>We pull the latest analyzer code on every run. As new best practices & checks are added to the workflow analyzer over time, this action will always be up-to-date!
 
 ---
