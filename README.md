@@ -39,9 +39,9 @@ If you _**are**_ already using one or more GitHub Actions in your repository:
 2. Please be aware of [pricing & usage limits](https://docs.github.com/en/actions/reference/usage-limits-billing-and-administration) associated with using GitHub Actions.
 3. No changes are required on SXO for this action to work. You'd setup the Git Endpoint for your repository on SXO and commit as you typically do.
 4. Let the world know you've analyzed your workflows by adding a badge to your repository! 🎉
-<br><br>[![sxoanalyzed](https://svgshare.com/i/_4q.svg)](https://github.com/ciscomanagedservices/sxo-analyzer)
+<br><br>[![sxoanalyzed](https://raw.githubusercontent.com/ciscomanagedservices/sxo-analyzer/main/.github/workflows/sxo-analyzer-badge.svg)](https://github.com/ciscomanagedservices/sxo-analyzer)
     
-    > Copy this code to your README: `[![sxoanalyzed](https://svgshare.com/i/_4q.svg)](https://github.com/ciscomanagedservices/sxo-analyzer)`
+    > Copy this code to your README: `[![sxoanalyzed](https://raw.githubusercontent.com/ciscomanagedservices/sxo-analyzer/main/.github/workflows/sxo-analyzer-badge.svg)](https://github.com/ciscomanagedservices/sxo-analyzer)`
 
 ---
 
