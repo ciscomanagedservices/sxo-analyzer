@@ -36,7 +36,7 @@ jobs:
         id: analyzer-run
         uses: fjogeleit/http-request-action@master
         with:
-          url: "https://raw.githubusercontent.com/nxmbiar/analyzer-scripts/main/analyzer_run.js"
+          url: "https://raw.githubusercontent.com/ciscomanagedservices/sxo-analyzer/main/.github/analyzer_run.js"
           method: 'GET'
 
       - name: Write analyzer-run
@@ -50,7 +50,7 @@ jobs:
         id: analyzer-render-template
         uses: fjogeleit/http-request-action@master
         with:
-          url: "https://raw.githubusercontent.com/nxmbiar/analyzer-scripts/main/analyzer_render_template.py"
+          url: "https://raw.githubusercontent.com/ciscomanagedservices/sxo-analyzer/main/.github/analyzer_render_template.py"
           method: 'GET'
 
       - name: Create template Directory if does not exist
@@ -63,7 +63,7 @@ jobs:
         id: analyzer-issue-template
         uses: fjogeleit/http-request-action@master
         with:
-          url: "https://raw.githubusercontent.com/nxmbiar/analyzer-scripts/main/ANALYZER_ISSUE_TEMPLATE.md"
+          url: "https://raw.githubusercontent.com/ciscomanagedservices/sxo-analyzer/main/.github/templates/ANALYZER_ISSUE_TEMPLATE.md"
           method: 'GET'
 
       - name: Write analyzer-issue-template
