@@ -42,6 +42,7 @@ for wf in wfs:
 
 print(f'::set-output name=close_issues::${close_issues}')
 # print(wfs)
+print(f'::debug::close_issues{close_issues}no_issue{no_issue}')
 output = template.render(issues=issues, warnings=warnings, successes=successes, wfs=wfs, hash=sys.argv[2])
 
 with open(path.join(path.dirname(__file__),'ISSUE.md'),'w', encoding="utf-8") as f:
