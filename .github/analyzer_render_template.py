@@ -24,18 +24,18 @@ for wf in wfs:
     if issues.get(wf) != None or successes.get(wf) != None or warnings.get(wf) != None:
         wf_analyzed.append(wf)
 
-no_issue = False
+no_issue = 'False'
 if len(wf_analyzed) == 0:
-    no_issue = True
+    no_issue = 'True'
 print(f'::set-output name=no_issue::${no_issue}')
 # time.sleep(2)
 # sys.exit(0)
 
-close_issues = True
+close_issues = 'True'
 for wf in wfs:
     try:
         if len(issues[wf]) != 0 or len(warnings[wf]) != 0:
-            close_issues = False
+            close_issues = 'False'
             break
     except KeyError:
         continue
